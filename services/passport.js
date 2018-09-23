@@ -5,6 +5,20 @@ const keys = require('../config/keys');
 
 const User = mongoose.model('users');
 
+
+// identify user using user.id from mongo identifier not profile id
+passport.serializeUser((user, done) => {
+    done(null, user.id);
+});
+
+// deserializUser takes above id and turn it into a User Model instance
+passport.deserializeUser((id, done) => {
+    User.findById(id)
+        .then(user => {
+            done(null, user);
+        });
+});
+
 // creates a new instance of google strategy- console.developers.google.com
 passport.use
     (new GoogleStrategy(
