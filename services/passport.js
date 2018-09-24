@@ -17,7 +17,7 @@ passport.deserializeUser((id, done) => {
         .then(user => {
             done(null, user);
         });
-})
+});
 
 // creates a new instance of google strategy- console.developers.google.com
 passport.use
