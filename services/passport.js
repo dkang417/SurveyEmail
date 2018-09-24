@@ -17,7 +17,7 @@ passport.deserializeUser((id, done) => {
         .then(user => {
             done(null, user);
         });
-});
+})
 
 // creates a new instance of google strategy- console.developers.google.com
 passport.use
@@ -25,7 +25,8 @@ passport.use
         {
             clientID: keys.googleClientID,
             clientSecret: keys.googleClientSecret,
-            callbackURL: '/auth/google/callback'
+            callbackURL: '/auth/google/callback',
+            proxy: true
         },
         (accessToken, refreshToken, profile, done) => {
             User.findOne({ googleId: profile.id })
