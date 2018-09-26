@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 // connecting authreducer to verify user in header
 import { connect } from 'react-redux';
+import Payments from './Payments';
 
 class Header extends Component {
     // checks if user is logged in
@@ -13,8 +14,12 @@ class Header extends Component {
                 return <li><a href="/auth/google">Login With google</a></li>;
                 
             default:
-                return <li><a href="/api/logout">Logout</a></li>;    
+                return [
+                    <li key="1"><Payments /></li>,
+                    <li key="2"><a href="/api/logout">Logout</a></li>
+                ];
         }
+                
     }
     render() {
         console.log(this.props);
