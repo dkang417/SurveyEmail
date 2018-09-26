@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-
+import { Link } from 'react-router-dom';
 // connecting authreducer to verify user in header
 import { connect } from 'react-redux';
 
@@ -21,9 +21,12 @@ class Header extends Component {
         return (
             <nav>
                 <div className="nav-wrapper">
-                    <a className="left brand-logo">
+                    <Link
+                        to={this.props.auth ? '/surveys' : '/'}
+                        className="left brand-logo"
+                    >
                         Emaily    
-                    </a>
+                    </Link>
 
                     <ul className="right">
                        {this.renderContent()}
