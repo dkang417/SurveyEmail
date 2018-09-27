@@ -11,7 +11,7 @@ const Landing = () => {
             </h6>
 
 
-    <div class="row">
+    <div className="row">
 
         <div className="col m6 s12">
                     <h4> Speeds up development </h4> 
