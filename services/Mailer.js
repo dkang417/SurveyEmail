@@ -1,8 +1,8 @@
 const sendgrid = require('sendgrid');
-const helper = sendgrid;
+const helper = sendgrid.mail;
 const keys = require('../config/keys');
 
-class Mailer extends helper.Mail{
+class Mailer extends helper.Mail {
     constructor({ subject, recipients }, content) {
         super();
         
@@ -29,6 +29,7 @@ class Mailer extends helper.Mail{
         trackingSettings.setClickTracking(clickTracking);
         this.addTrackingSettings(trackingSettings);
     }
+    
     addRecipients() {
         const personalize = new helper.Personalization();
         this.recipients.forEach(recipient => {
@@ -43,7 +44,7 @@ class Mailer extends helper.Mail{
             path: '/v3/mail/send',
             body: this.toJSON()
         });
-        
+
         const response = this.sgApi.API(request);
         return response;
     }
