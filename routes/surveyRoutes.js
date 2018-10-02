@@ -6,15 +6,30 @@ const surveyTemplate = require('../services/emailTemplates/surveyTemplate');
 
 const Survey = mongoose.model('surveys');
 
+const _ = require('lodash');
+const Path = require('path-parser');
+const { URL } = require('url');
+
 module.exports = app => {
     app.get('/api/surveys/thanks', (req, res) => {
         res.send('Thanks for voting!'); 
     });
 
     app.post('/api/surveys/webhooks', (req, res) => {
-        console.log(req.body);
+        const p = new Path('/api/surveys/:surveyId/:choice');
+        
+        const events = _.map(req.body, ({ email, url }) => {
+            const match = p.test(new URL(url).pathname);
+            if (match) {
+                return { email, surveyId: match.surveyId, choice:match.choice};
+            }
+        });
+        // console.log(events);
+        const compactEvents = _.compact(events);
+        const uniqueEvents = _.uniqBy(compactEvents, 'email', 'surveyId');
+        console.log(uniqueEvents);
         res.send({});
-    })
+    });
 
     app.post('/api/surveys', requireLogin, requireCredits, async (req, res) => {
         const { title, subject, body, recipients } = req.body;
